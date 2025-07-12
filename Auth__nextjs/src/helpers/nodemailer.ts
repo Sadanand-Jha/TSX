@@ -39,38 +39,33 @@ export const sendEmail = async({email, emailType, userId} : any) => {
         }
         await user.save()
         // Looking to send emails in production? Check out our Email API/SMTP product!
-        const transport = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-            user: process.env.NODEMAILER_USER,
-            pass: process.env.NODEMAILER_PASSWORD
-        }
-
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.NodeMailerUserId,
+                pass: process.env.NodeMailerPassword,
+            },
         });
-    
         const mailOptions = {
-            from: "sadanand@gmail.com",
+            from: process.env.NodeMailerUserId,
             to: email,
             subject: emailType === 'VERIFY' ? "Verify your email":"Reset your password",
             html: `<p>Click <a href="${process.env.DOMAIN}/${emailType === 'VERIFY' ? 'verifyemail': 'changepassword'}?token=${hashedToken}"> here </a> to ${emailType === "VERIFY" ? "verify your email": "reset your password"}</p> `
         }
 
-        console.log("email is ", email);
-
-        // console.log("mail sent successfully!")
-        // console.log(process.env.NODEMAILER_USER);
-        // console.log(process.env.NODEMAILER_PASSWORD);
+        // console.log("email is ", email);
         
-        const mailResponse = await transport.sendMail(mailOptions);
-        console.log(mailResponse);
+        const mailResponse = await transporter.sendMail(mailOptions);
+        // console.log(mailResponse);
         // console.log("Message sent:", mailResponse.messageId);
 
         return mailResponse;
 
     } catch (error: any) {
         console.log("error occured in nodemailer")
-        console.log("meow", error.message);
+        // console.log("meow", error.message);
         throw new Error(error.message);
     }
 }

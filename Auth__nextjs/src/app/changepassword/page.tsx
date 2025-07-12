@@ -44,9 +44,9 @@ export default function changePassword(){
                 const response = await axios.post('/api/savepassword', {username, password1})
                 console.log(response)
                 setDisplayMsg(displayMsg + "Success!")
-                // setTimeout(() => {
-                //     router.push('/login')
-                // }, 5000);
+                setTimeout(() => {
+                    router.push('/login')
+                }, 5000);
             } catch (error: any) {
                 console.log('meow error')
             }
@@ -89,11 +89,13 @@ export default function changePassword(){
                         <div className="text-center">
                             <div>Enter new password</div>
                             <div>
-                                <input type="password" placeholder="password" className="border-2"/>
+                                <input type="password" placeholder="password" className="border-2"
+                                value={password1} onChange={(e) => setpassword1(e.target.value)}/>
                             </div>
                             <div>Confirm Password</div>
                             <div>
-                                <input type="password" placeholder="password" className="border-2"/>
+                                <input type="password" placeholder="password" className="border-2"
+                                value={password2} onChange={(e) => setpassword2(e.target.value)}/>
                             </div>
                         </div>
                     )}

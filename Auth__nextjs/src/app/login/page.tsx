@@ -28,8 +28,6 @@ export default function LoginPage(){
             await axios.post('../api/login', user)
 
             router.push('/profile');
-        
-
         } catch (error: any) {
             setDisplayMsg(error.response.data.error);
         }finally{
