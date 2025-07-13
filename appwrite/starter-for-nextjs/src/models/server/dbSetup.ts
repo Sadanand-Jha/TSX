@@ -9,8 +9,6 @@ export default async function getOrCreateDB(){
     try {
         await databases.get(db)
         console.log("database connected")
-
-
     } catch (error :any) {
         try {
             await databases.create(db, db)
