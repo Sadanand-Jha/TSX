@@ -12,7 +12,6 @@ const emailVerifyModel = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 300
     },
     token: {
       type: String,
@@ -23,7 +22,7 @@ const emailVerifyModel = new Schema({
 emailVerifyModel.index(
   { createdAt: 1 },
   {
-    expireAfterSeconds: 300,
+    expireAfterSeconds: 30000,
     partialFilterExpression: { isVerified: false }
   }
 );

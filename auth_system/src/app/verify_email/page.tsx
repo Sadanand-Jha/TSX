@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useEmailStore } from '@/store/email_verification';
 import { useRouter } from 'next/navigation';
-import { EmailVerify } from '@/models/emailVerifyModel';
 import axios from 'axios';
 
 
@@ -27,13 +26,11 @@ function page() {
         try {
           setBtnDisabled(true)
           // console.log("the button is clicked! and the emailid is ", emailId);
-          const response = await axios.post('/api/verifyemail', {emailId})
+          const response = await axios.post('/api/verifyemail', {emailId}) // sends mail only
           console.log(response);
           setBtnText("Email Sent!. Check your Email")
           setEmailStatus();
-          setTimeout(() => {
-            route.push("/register")
-          }, 5000);
+          
           console.log("Message Sent!")
         } catch (error: any) {
           console.log(error.message)
