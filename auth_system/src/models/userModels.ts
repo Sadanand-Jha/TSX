@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
-const emailVerification = new Schema({
+const user = new Schema({
     email: {
         type: String,
         required: [true, "Please provide an email"]
@@ -10,19 +10,24 @@ const emailVerification = new Schema({
         type: String,
         default: undefined
     },
-
+    password: {
+        type: String, 
+        required: [true, "Please set a Password for this username"]
+    },
     username: {
         type: String,
-        required: [true, "Please provide the username"]
+        required: [true, "Please provide the username"],
+        unique: true
     },
     role: {
         type: String,
         enum: ["user", "admin"],
         default: "user"
     },
-    createdAt: {type: Date, default: Date.now, expire: 300},
+    createdAt: {type: Date, default: Date.now},
+    updatedAt: {type: Date, default: Date.now}
 });
 
-const Verification = mongoose.models.verify || mongoose.model('verify', emailVerification)
+const User = mongoose.models.user || mongoose.model('user', user)
 
-export default Verification
+export default User
